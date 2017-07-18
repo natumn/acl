@@ -1,12 +1,13 @@
 package main
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
-	"github.com/mattn/go-sqlite3"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 func main() {
@@ -14,7 +15,10 @@ func main() {
 
 	//Get user's class this semester.
 	r.GET("/123", func(c *gin.Context) {
-		db, err := gorm.Open("sqlite3", "/class.db")
+		db, err := gorm.Open("sqlite3", "/db/class.db")
+		if err != nil {
+			log.Fatal(err)
+		}
 		defer db.Close()
 
 		c.JSON(200, gin.H{
@@ -31,9 +35,10 @@ func main() {
 		defer db.Close()
 
 		userId := c.Query("id")
-		class := c.Request.class
-		absNum := c.Request.absenceNumber
+		class := c.PostForm("class")
+		absNum := c.PostForm("absNum")
 
+		fmt.Println("%s ,%s ,%s", userId, absNum, class)
 	})
 	r.Run()
 }
