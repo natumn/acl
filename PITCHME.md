@@ -24,6 +24,10 @@
 ##Demo
 
 ---
+
+![](src/frontend/assents/kkeseki.png)
+
+---
 ###解決する課題
 
 - 少なくとも出席で単位を落とさないようにする。

@@ -27,14 +27,14 @@ func main() {
 	})
 
 	//Check user's DB to exist.If not exist,initDB().If exist, In user's DB, post data.
-	r.POST("/123", func(c *gin.Context) {
+	r.POST("/", func(c *gin.Context) {
 		db, err := gorm.Open("sqlite3", "/db/class.db")
 		if err != nil {
 			log.Fatal(err)
 		}
 		defer db.Close()
 
-		userId := c.Query("id")
+		//userId := c.Query("id")
 		class := c.PostForm("class")
 		absNum := c.PostForm("absNum")
 
