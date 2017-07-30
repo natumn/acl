@@ -10,13 +10,6 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-type class struct {
-	class  string `json:class`
-	day    string `json:day`
-	period string `json:period`
-	count  int    `json:count`
-}
-
 func main() {
 	r := gin.Default()
 
