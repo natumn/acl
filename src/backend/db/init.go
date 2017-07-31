@@ -15,13 +15,16 @@ count (
   Thursday
   Friday
 )
+type Class struct {
+  className string `json:class`
+  count int `json:count`
+  period int `json:period`
+}
 
 type class struct {
   gorm.Models
-  class  string `json:class`
+  class Class
 	day  Weekday `json:day`
-	period int `json:period`
-	count  int    `json:count`
 }
 
 func main() {
