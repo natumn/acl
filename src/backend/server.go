@@ -22,15 +22,16 @@ type Weekday int
 //)
 
 type Class struct {
-	Id        int    `json:id`
+	Id        int    `gorm"ForeignKey:Id"`
 	className string `json:className`
 	count     int    `json:count`
 }
 
 type WeekClass struct {
+	Id     int `gorm"ForeignKey:Id"`
 	period int `json:period`
-	Class
-	day string `json:Weekday`
+	class  Class
+	day    string `json:Weekday`
 }
 
 type errWriter struct {
