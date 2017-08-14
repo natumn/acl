@@ -13,13 +13,13 @@ import (
 
 type Weekday int
 
-const (
-	Monday Weekday = iota
-	Tuseday
-	Wednesday
-	Thursday
-	Friday
-)
+// const (
+//	Monday Weekday = iota
+//	Tuseday
+//	Wednesday
+//	Thursday
+//	Friday
+//)
 
 type Class struct {
 	Id        int    `json:id`
@@ -30,12 +30,11 @@ type Class struct {
 type WeekClass struct {
 	period int `json:period`
 	Class
-	day Weekday `json:Weekday`
+	day string `json:Weekday`
 }
 
 type errWriter struct {
-	err    error
-	dayErr error
+	err error
 }
 
 func main() {
@@ -46,8 +45,9 @@ func main() {
 		db := dbConnect()
 		defer db.Close()
 
+		w := db.Preload("classes")
 		c.JSON(200, gin.H{
-			"message": "ping",
+			"class": w,
 		})
 	})
 
@@ -60,20 +60,15 @@ func main() {
 		w := WeekClass{}
 
 		w.className = c.PostForm("className")
+		w.day = c.PostForm("weekday")
 		w.count, e.err = strconv.Atoi(c.PostForm("count"))
 		w.period, e.err = strconv.Atoi(c.PostForm("period"))
 		if e.err != nil {
 			log.Fatal(e.err)
 		}
-		// I can't resolve Weekday type cast yet.
-		w.day, e.dayErr = Weekday(c.PostForm("weekday"))
-		if e.dayErr != nil {
-			log.Fatal(e.dayErr)
-		}
 
-		fmt.Println(w.className, w.day, w.period)
-		db.Create(&WeekClass)
-		db.Create(&Class)
+		fmt.Println(w.className, w.day, w.period, w.count)
+		db.Create(&w)
 	})
 	r.Run()
 }
@@ -84,6 +79,6 @@ func dbConnect() *gorm.DB {
 	if err != nil {
 		log.Fatal(err)
 	}
-	db.AutoMigrate(&Class{}, &weekClass{})
+	db.AutoMigrate(&Class{}, &WeekClass{})
 	return db
 }
