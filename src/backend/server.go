@@ -13,14 +13,6 @@ import (
 
 type Weekday int
 
-// const (
-//	Monday Weekday = iota
-//	Tuseday
-//	Wednesday
-//	Thursday
-//	Friday
-//)
-
 type Class struct {
 	Id        int    `gorm"ForeignKey:Id"`
 	className string `json:className`
