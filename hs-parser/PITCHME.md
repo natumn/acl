@@ -206,7 +206,7 @@ main = do
 
 ###  ちなみに実行すると
 
-```haskell: Exec.hs
+```haskell:Exec.hs
 stack exec hs-parser-exe
 AssignNode "x1" (ProdNode Div (UnaryNode Minus (NumNode 15.0)) (SumNode Plus (NumNode 2.0) (VarNode "x2")))
 ```
