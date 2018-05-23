@@ -20,21 +20,6 @@ koki natsume
 
 [なぜHaskellを学ぶのか](https://qiita.com/arowM/items/0305d4f439752f285438)
 
----
-
-### 文法
-```
-Expression <- Term [+-] Expression
-            | Identifier '=' Expression
-            | Term
-Term       <- Factor [*/] Term
-            | Factor
-Factor     <- Number
-            | Identifier
-            | [+-] Factor
-            | '(' Expression ')'
-```
-
 --- 
 
 ### Parse Tree
@@ -87,14 +72,14 @@ data Foo = Bar Int Int | Baz Int Int Int
 ```
 
 #### Showクラス
-```Show.hs
+```haskell:Show.hs
 show :: a -> String
 ```
 
 +++
 
 ### 関数定義
-```haskell=FuncDef.hs
+```haskell:FuncDef.hs
 max :: Num a => [a] -> a
 max = 処理を書く
 ```
@@ -131,7 +116,7 @@ tokenize (c : cs) =
 
 ### ガード等式
 
-``` G.hs
+``` haskell:Gad.hs
 tokenize (c : cs)
     | elem c "+-*/" = TokOp (operator c) : tokenize cs
     | c == '='  = TokAssign : tokenize cs
@@ -219,4 +204,12 @@ main = do
 
 ---
 
-ご静聴ありがとうござました！
+###  ちなみに実行すると
+```bash: parser.sh
+ ~/g/s/g/n/acl   …  hs-parser  stack exec hs-parser-exe                              水  5/23 10:58:45 2018
+AssignNode "x1" (ProdNode Div (UnaryNode Minus (NumNode 15.0)) (SumNode Plus (NumNode 2.0) (VarNode "x2")))
+```
+
+---
+
+## ご静聴ありがとうござました！
